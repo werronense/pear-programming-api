@@ -17,10 +17,30 @@ function readData() {
 }
 
 //get all pears
-app.get('/pears', (req, res) => {
+app.get('/pears/all', (req, res) => {
   const data = readData();
   res.json(data);
 });
+app.get('/' , (req, res) => { 
+    // call "/pears" endpoint
+    res.redirect('/pears');
+});
+
+// get 4 pears with unique names
+app.get('/pears', (req, res) => {
+    const data = readData();
+    const pears = [];
+    const names = [];
+    while (pears.length < 4) {
+      const randomIndex = Math.floor(Math.random() * data.length);
+      const pear = data[randomIndex];
+      if (!names.includes(pear.name)) {
+        pears.push(pear);
+        names.push(pear.name);
+      }
+    }
+    res.json(pears);
+  });
 
 // get two randon pears but not with the same name
 app.get('/pears/random', (req, res) => {
