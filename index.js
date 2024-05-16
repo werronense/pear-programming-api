@@ -33,6 +33,33 @@ app.get('/pears/random', (req, res) => {
     res.json([data[randomIndex1], data[randomIndex2]]);
   });
   
+// get  pear by name filter
+app.get('/pears/:name', (req, res) => {
+    const name = req.params.name + ' Pear';
+    const data = readData();
+    const pear = data.filter((pear) => pear.name === name);
+    if (pear) {
+      res.json(pear);
+    } else {
+      res.status(404).json({ message: 'Pear not found' });
+    }
+  
+  });
+
+// add a new pear
+// create a map of names and images
+app.post('/pears', (req, res) => {
+    const data = readData();
+    const newPear = {
+      id: uuidv4(),
+      name: req.body.name,
+      paragraph: req.body.paragraph,
+      imageURL: `"http://localhost:5050/images/{req.body.name.toLowerCase()}-pear.jpg"`,
+    };
+    data.push(newPear);
+    fs.writeFileSync('./data/pears.json', JSON.stringify(data));
+    res.json(newPear);
+  });
 
 
 app.listen(PORT, () => {
