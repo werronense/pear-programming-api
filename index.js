@@ -4,7 +4,7 @@ const {v4: uuidv4} = require('uuid');  // npm install uuid
 const app = express();
 const cors = require('cors');
 
-const PORT = 3000;
+const PORT = 5050;
 
 
 app.use(cors());
