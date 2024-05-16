@@ -22,6 +22,19 @@ app.get('/pears', (req, res) => {
   res.json(data);
 });
 
+// get two randon pears but not with the same name
+app.get('/pears/random', (req, res) => {
+    const data = readData();
+    const randomIndex1 = Math.floor(Math.random() * data.length);
+    let randomIndex2 = Math.floor(Math.random() * data.length);
+    while (data[randomIndex2].name === data[randomIndex1].name) {
+      randomIndex2 = Math.floor(Math.random() * data.length);
+    }
+    res.json([data[randomIndex1], data[randomIndex2]]);
+  });
+  
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 
